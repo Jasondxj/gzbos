@@ -13,8 +13,8 @@
             <result name="success">/WEB-INF/pages/{1}/{2}.jsp</result>
         </action>
 
-        <action name="test" class="com.jason.bos.web.action.TestAction" method="test">
-            <result name="success">page_user_list</result>
+        <!--用户模块-->
+        <action name="userAction_*" class="com.jason.bos.web.action.UserAction" method="{1}">
         </action>
     </package>
 </struts>
