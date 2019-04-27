@@ -8,13 +8,35 @@
     <constant name="struts.devMode" value="true"></constant>
 
     <package name="p1" extends="struts-default">
+        <!--声明一个登录拦截器-->
+        <interceptors>
+            <interceptor name="BOSLoginInterceptor" class="com.gyf.bos.web.interceptor.BOSLoginInterceptor">
+                <!-- excludeMethods排除: 登录不需要拦截 -->
+                <param name="excludeMethods">login</param>
+            </interceptor>
+
+            <!-- 声明一个拦截器组(栈)-->
+            <interceptor-stack name="myDefaultStack">
+                <interceptor-ref name="BOSLoginInterceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <!-- 修改struts默认拦截器-->
+        <default-interceptor-ref name="myDefaultStack"/>
+        <!--配置全局result-->
+        <global-results>
+            <result name="login" type="redirect">/login.jsp</result>
+        </global-results>
         <!-- 配置jsp页面的访问规则-->
-        <action name="page_*_*" >
+        <action name="page_*_*">
             <result name="success">/WEB-INF/pages/{1}/{2}.jsp</result>
         </action>
 
         <!--用户模块-->
         <action name="userAction_*" class="com.jason.bos.web.action.UserAction" method="{1}">
+            <result name="home">/WEB-INF/pages/common/index.jsp</result>
+            <result name="loginfailure">/login.jsp</result>
         </action>
     </package>
 </struts>
