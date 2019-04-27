@@ -43,7 +43,7 @@
         <!-- hibernate映射文件-->
         <property name="mappingDirectoryLocations">
             <list>
-               <!-- <value>classpath:com/jason/bos/model</value>-->
+                <value>classpath:com/jason/bos/model</value>
             </list>
         </property>
     </bean>
@@ -53,8 +53,13 @@
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
 
+    <!-- 配置hiberante的模版 bean-->
+    <bean class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
     <!--组件扫描-->
-    <context:component-scan base-package="com.jason.bos"/>
+    <context:component-scan base-package="com.jason.bos.*"/>
 
     <!--引用注解解析器-->
     <!--<context:annotation-config></context:annotation-config>-->
