@@ -108,6 +108,7 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 
         //2.查询分页数据
         dc.setProjection(null);//把之前条件清空
+        dc.setResultTransformer(DetachedCriteria.ROOT_ENTITY);//重置hql
         //limit 0,10
         int start = (pb.getCurrentPage() - 1) * pb.getPageSize();
         int length = pb.getPageSize();
