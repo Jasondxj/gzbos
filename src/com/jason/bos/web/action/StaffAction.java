@@ -32,9 +32,22 @@ public class StaffAction extends BaseAction<Staff> {
         return null;
     }
 
+    /**
+     * 删除取派员
+     */
+    private String ids;
+
+    public void setIds(String ids) {
+        this.ids = ids;
+    }
+
     @Override
-    public String delete() {
-        return null;
+    public String delete() throws IOException {
+        //获取删除的id
+        staffService.deleteBatch(ids);
+        HttpServletResponse response = ServletActionContext.getResponse();
+        response.getWriter().write("success");
+        return NONE;
     }
 
     @Override
@@ -57,7 +70,7 @@ public class StaffAction extends BaseAction<Staff> {
     }
 
     public void pageQuery() throws IOException {
-        PageBean<Staff> pb=new PageBean<Staff>();
+        PageBean<Staff> pb = new PageBean<Staff>();
         pb.setCurrentPage(page);
         pb.setPageSize(row);
         //查询条件
@@ -67,9 +80,9 @@ public class StaffAction extends BaseAction<Staff> {
         //返回json数据
         //3.1排除不需要转json的属性
         JsonConfig config = new JsonConfig();
-        config.setExcludes(new String[]{"currentPage","pageSize","detachedCriteria"});
+        config.setExcludes(new String[]{"currentPage", "pageSize", "detachedCriteria"});
         //3.2创建json对象
-        JSONObject jsonObject = JSONObject.fromObject(pb,config);
+        JSONObject jsonObject = JSONObject.fromObject(pb, config);
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setContentType("text/json;charset=utf-8");
         response.getWriter().write(jsonObject.toString());

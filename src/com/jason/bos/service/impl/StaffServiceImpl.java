@@ -52,4 +52,16 @@ public class StaffServiceImpl extends BaseServiceImpl<Staff> implements IStaffSe
     public void pageQuery(PageBean<Staff> pb) {
         staffDao.pageQuery(pb);
     }
+
+    @Override
+    public void deleteBatch(String ids) {
+        String hql = "UPDATE Staff SET deltag = ? WHERE id = ?";
+
+        //拆分id
+        String[] idsArr = ids.split(",");
+        for (String id : idsArr){
+            staffDao.executeUpdate(hql,"1",id);
+            //staffDao.executeUpdateByQueryName("staff.delete","1",id);
+        }
+    }
 }

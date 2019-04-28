@@ -58,7 +58,7 @@
 		}
 
 		var idsStr = ids.join(',');//连接字符串
-		alert(idsStr);
+		// alert(idsStr);
 
 		//2.访问staffAction_delete.action?ids=A01,A02,A03
 		$.post(
@@ -67,7 +67,7 @@
 			function (data) {
 		        if(data == 'success'){
                     $.messager.alert('提示','作废更新成功','info');
-                    //重新刷新当前页数据【自己找】
+                    //重新刷新当前页数据
                     $('#grid').datagrid('reload');
 				}else{
                     $.messager.alert('提示','作废更新失败','error');
