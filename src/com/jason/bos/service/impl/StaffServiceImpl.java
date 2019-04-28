@@ -2,6 +2,7 @@ package com.jason.bos.service.impl;
 
 import com.jason.bos.dao.IStaffDao;
 import com.jason.bos.dao.IUserDao;
+import com.jason.bos.model.PageBean;
 import com.jason.bos.model.Staff;
 import com.jason.bos.model.User;
 import com.jason.bos.service.IStaffService;
@@ -45,5 +46,10 @@ public class StaffServiceImpl extends BaseServiceImpl<Staff> implements IStaffSe
     @Override
     public List<Staff> findAll() {
         return staffDao.findAll();
+    }
+
+    @Override
+    public void pageQuery(PageBean<Staff> pb) {
+        staffDao.pageQuery(pb);
     }
 }
