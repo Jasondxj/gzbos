@@ -5,9 +5,11 @@ import com.jason.bos.model.PageBean;
 import com.jason.bos.model.Region;
 import com.jason.bos.model.Staff;
 import com.jason.bos.service.IRegionService;
+import com.jason.bos.utils.PinYin4jUtils;
 import com.jason.bos.web.action.base.BaseAction;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -50,14 +52,25 @@ public class RegionAction extends BaseAction<Region> {
             String district = row.getCell(3).getStringCellValue();
             String postcode = row.getCell(4).getStringCellValue();
 
+            //根据中文生成城市编码
+            String citycode= StringUtils.join(PinYin4jUtils.stringToPinyin(city));
+            //根据中文生成简码
+            String cityTmp = city.substring(0,city.length() - 1);
+            String districtTmp = district.substring(0,district.length() - 1);
+            String[] cityStrs =  PinYin4jUtils.getHeadByString(cityTmp);
+            String[] districtStrs = PinYin4jUtils.getHeadByString(districtTmp);
+            String shortcode = StringUtils.join(cityStrs,"") + StringUtils.join(districtStrs,"");
             //封装成Region模型
             Region region = new Region(id, province, city, district, postcode);
+            region.setCitycode(citycode);
+            region.setShortcode(shortcode);
             list.add(region);
         }
         list.remove(0);//表头不存入数据库
         //调用servic
         regionService.saveAll(list);
-        return SUCCESS;
+        responseStr("success");
+        return NONE;
     }
 
     @Override
@@ -88,6 +101,14 @@ public class RegionAction extends BaseAction<Region> {
         pb.setPageSize(rows);
         regionService.pageQuery(pb);
         //3.返回json数据
-        responseJson(pb, new String[]{"currentPage", "pageSize", "detachedCriteria"});
+        responseJson(pb, new String[]{"currentPage", "pageSize", "detachedCriteria","subareas"});
+    }
+    public String listJson() throws IOException {
+        List<Region> regions = regionService.findAll();
+        /**
+         * 转json时，不要转subareas，否则会出现死循环
+         */
+        responseJson(regions,new String[]{"subareas"});
+        return NONE;
     }
 }

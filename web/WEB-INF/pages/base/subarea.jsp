@@ -138,7 +138,16 @@
 		field : 'single',
 		title : '单双号',
 		width : 100,
-		align : 'center'
+		align : 'center',
+        formatter : function(data,row, index){
+            if(data=="0"){
+                return "单号"
+            }else if(data=="1"){
+                return "双号";
+            }else {
+                return "单双号";
+            }
+        }
 	} , {
 		field : 'position',
 		title : '位置',
@@ -157,10 +166,11 @@
 			border : true,
 			rownumbers : true,
 			striped : true,
-			pageList: [30,50,100],
+            pageSize:2,
+			pageList: [2,4,6],
 			pagination : true,
 			toolbar : toolbar,
-			url : "json/subarea.json",
+			url : "${pageContext.request.contextPath}/subareaAction_pageQuery.action",
 			idField : 'id',
 			columns : columns,
 			onDblClickRow : doDblClickRow
@@ -190,6 +200,14 @@
 		$("#btn").click(function(){
 			alert("执行查询...");
 		});
+		$("#save").click(function () {
+            var v = $("#addSubareaForm").form('validate');
+            if(v){
+                $("#addSubareaForm").submit();
+            }else{
+                $.messager.alert("提示","表单数据不正确","error");
+            }
+        });
 		
 	});
 
@@ -211,7 +229,7 @@
 		</div>
 		
 		<div style="overflow:auto;padding:5px;" border="false">
-			<form>
+			<form id="addSubareaForm" action="${pageContext.request.contextPath}/subareaAction_save.action">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">分区信息</td>
@@ -224,7 +242,7 @@
 						<td>选择区域</td>
 						<td>
 							<input class="easyui-combobox" name="region.id"  
-    							data-options="valueField:'id',textField:'name',url:'json/standard.json'" />  
+    							data-options="valueField:'id',textField:'name',url:'${pageContext.request.contextPath}/regionAction_listJson.action'" />
 						</td>
 					</tr>
 					<tr>

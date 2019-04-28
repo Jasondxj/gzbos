@@ -5,11 +5,17 @@
 <hibernate-mapping>
 
     <class name="com.jason.bos.model.Subarea" table="bc_subarea" schema="bos">
-        <id name="id" column="id"/>
+        <id name="id" column="id">
+            <generator class="assigned"></generator>
+        </id>
         <property name="addresskey" column="addresskey"/>
         <property name="startnum" column="startnum"/>
         <property name="endnum" column="endnum"/>
         <property name="single" column="single"/>
         <property name="position" column="position"/>
+        <!--多对一的映射-->
+        <many-to-one name="region" lazy="false" class="com.jason.bos.model.Region" column="region_id">
+
+        </many-to-one>
     </class>
 </hibernate-mapping>

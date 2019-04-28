@@ -46,5 +46,9 @@
         <action name="regionAction_*" class="com.jason.bos.web.action.RegionAction" method="{1}">
             <result name="success">/WEB-INF/pages/base/region.jsp</result>
         </action>
+        <!--分区模块-->
+        <action name="subareaAction_*" class="com.jason.bos.web.action.SubareaAction" method="{1}">
+            <result name="success">/WEB-INF/pages/base/subarea.jsp</result>
+        </action>
     </package>
 </struts>

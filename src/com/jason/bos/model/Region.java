@@ -1,6 +1,9 @@
 package com.jason.bos.model;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Region {
     private String id;
@@ -10,6 +13,19 @@ public class Region {
     private String postcode;
     private String shortcode;
     private String citycode;
+    private Set<Subarea> subareas=new HashSet<Subarea>();//一对多
+
+    public Set<Subarea> getSubareas() {
+        return subareas;
+    }
+
+    public void setSubareas(Set<Subarea> subareas) {
+        this.subareas = subareas;
+    }
+
+    public String getName() {
+        return province + city + district;
+    }
 
     public String getId() {
         return id;
@@ -76,5 +92,18 @@ public class Region {
         this.city = city;
         this.district = district;
         this.postcode = postcode;
+    }
+
+    @Override
+    public String toString() {
+        return "Region{" +
+                "id='" + id + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", postcode='" + postcode + '\'' +
+                ", shortcode='" + shortcode + '\'' +
+                ", citycode='" + citycode + '\'' +
+                '}';
     }
 }

@@ -9,6 +9,15 @@ public class Subarea {
     private String endnum;
     private String single;
     private String position;
+    private Region region;//多对一
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
 
     public String getId() {
         return id;
@@ -59,21 +68,14 @@ public class Subarea {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Subarea subarea = (Subarea) o;
-        return Objects.equals(id, subarea.id) &&
-                Objects.equals(addresskey, subarea.addresskey) &&
-                Objects.equals(startnum, subarea.startnum) &&
-                Objects.equals(endnum, subarea.endnum) &&
-                Objects.equals(single, subarea.single) &&
-                Objects.equals(position, subarea.position);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, addresskey, startnum, endnum, single, position);
+    public String toString() {
+        return "Subarea{" +
+                "id='" + id + '\'' +
+                ", addresskey='" + addresskey + '\'' +
+                ", startnum='" + startnum + '\'' +
+                ", endnum='" + endnum + '\'' +
+                ", single='" + single + '\'' +
+                ", position='" + position + '\'' +
+                '}';
     }
 }
