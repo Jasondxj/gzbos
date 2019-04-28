@@ -116,6 +116,15 @@
 	} ] ];
 	
 	$(function(){
+        //添加一个表单的手机校验的规则
+        $.extend($.fn.validatebox.defaults.rules, {
+            phoneNumber: {
+                validator: function (value, param) {
+                    return /^1[3|4|5|7|8][0-9]{9}$/.test(value);
+                },
+                message: '请输入正确的手机号码!'
+            }
+        });
 		// 先将body隐藏，再显示，不会出现页面刷新效果
 		$("body").css({visibility:"visible"});
 		
@@ -148,7 +157,12 @@
 
 		//监听保存按钮
         $("#save").click(function () {
-            $("#addStaffForm").submit();
+            var test=$("#addStaffForm").form('validate');
+            if (test){
+                $("#addStaffForm").submit();
+            }else {
+                $.messager.alert('提示','表单数据格式不正确','error');
+            }
         });
 	});
 
@@ -185,7 +199,7 @@
 					</tr>
 					<tr>
 						<td>手机</td>
-						<td><input type="text" name="telephone" class="easyui-validatebox" required="true"/></td>
+						<td><input type="text" name="telephone" class="easyui-validatebox" required="true" data-options="validType:'phoneNumber'"/></td>
 					</tr>
 					<tr>
 						<td>单位</td>

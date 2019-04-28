@@ -37,4 +37,8 @@ public class StaffAction extends BaseAction<Staff> {
     public String list() {
         return null;
     }
+    public String pageQuery(){
+
+        return NONE;
+    }
 }
