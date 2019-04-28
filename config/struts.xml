@@ -38,5 +38,9 @@
             <result name="home">/WEB-INF/pages/common/index.jsp</result>
             <result name="loginfailure">/login.jsp</result>
         </action>
+        <!--员工模块-->
+        <action name="staffAction_*" class="com.jason.bos.web.action.StaffAction" method="{1}">
+            <result name="success">/WEB-INF/pages/base/staff.jsp</result>
+        </action>
     </package>
 </struts>

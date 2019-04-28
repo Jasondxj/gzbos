@@ -145,7 +145,11 @@
 	        height: 400,
 	        resizable:false
 	    });
-		
+
+		//监听保存按钮
+        $("#save").click(function () {
+            $("#addStaffForm").submit();
+        });
 	});
 
 	function doDblClickRow(rowIndex, rowData){
@@ -165,7 +169,7 @@
 		</div>
 		
 		<div region="center" style="overflow:auto;padding:5px;" border="false">
-			<form>
+			<form id="addStaffForm" action="${pageContext.request.contextPath}/staffAction_save.action">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">收派员信息</td>
