@@ -17,7 +17,7 @@
 
             <!-- 声明一个拦截器组(栈)-->
             <interceptor-stack name="myDefaultStack">
-                <interceptor-ref name="BOSLoginInterceptor"/>
+                <!--<interceptor-ref name="BOSLoginInterceptor"/>-->
                 <interceptor-ref name="defaultStack"/>
             </interceptor-stack>
         </interceptors>
