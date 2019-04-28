@@ -50,5 +50,9 @@
         <action name="subareaAction_*" class="com.jason.bos.web.action.SubareaAction" method="{1}">
             <result name="success">/WEB-INF/pages/base/subarea.jsp</result>
         </action>
+        <!--定区模块-->
+        <action name="decidedzoneAction_*" class="com.jason.bos.web.action.DecidedzoneAction" method="{1}">
+            <result name="success">/WEB-INF/pages/base/decidedzone.jsp</result>
+        </action>
     </package>
 </struts>

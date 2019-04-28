@@ -9,6 +9,8 @@ import com.jason.bos.service.IStaffService;
 import com.jason.bos.service.IUserService;
 import com.jason.bos.service.base.BaseServiceImpl;
 import com.jason.bos.utils.MD5Utils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,5 +65,13 @@ public class StaffServiceImpl extends BaseServiceImpl<Staff> implements IStaffSe
             staffDao.executeUpdate(hql,"1",id);
             //staffDao.executeUpdateByQueryName("staff.delete","1",id);
         }
+    }
+
+    @Override
+    public List<Staff> findAllByNoDelete() {
+        //离线查询对象
+        DetachedCriteria dc=DetachedCriteria.forClass(Staff.class);
+        dc.add(Restrictions.eq("deltag","0"));
+        return staffDao.findByDetachedCriteria(dc);
     }
 }

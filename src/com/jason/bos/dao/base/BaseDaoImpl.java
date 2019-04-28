@@ -115,4 +115,9 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
         List<T> rows = hibernateTemplate.findByCriteria(dc, start, length);
         pb.setRows(rows);
     }
+
+    @Override
+    public List<T> findByDetachedCriteria(DetachedCriteria dc) {
+        return this.hibernateTemplate.findByCriteria(dc);
+    }
 }

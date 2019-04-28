@@ -5,6 +5,8 @@ import com.jason.bos.model.Staff;
 import com.jason.bos.model.User;
 import com.jason.bos.service.base.IBaseService;
 
+import java.util.List;
+
 public interface IStaffService extends IBaseService<Staff>{
 
     /**
@@ -18,4 +20,6 @@ public interface IStaffService extends IBaseService<Staff>{
      * @param ids【001,002,003】
      */
     public void deleteBatch(String ids);
+
+    public List<Staff> findAllByNoDelete();
 }

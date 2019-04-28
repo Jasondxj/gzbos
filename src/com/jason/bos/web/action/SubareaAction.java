@@ -44,9 +44,11 @@ public class SubareaAction extends BaseAction<Subarea> {
     public String list() {
         return null;
     }
+
     public void pageQuery() throws IOException {
         pb.setCurrentPage(page);
         pb.setPageSize(rows);
+
         //添加查询的条件
         DetachedCriteria dc = pb.getDetachedCriteria();//Subarea
         // addresskey:d
@@ -77,13 +79,18 @@ public class SubareaAction extends BaseAction<Subarea> {
                 dc.add(Restrictions.like("r.district","%" + district + "%"));
             }
         }
+
+
+
+        //2.调用service,参数里传一个PageBean
         subareaService.pageQuery(pb);
-        //3.返回json数据
         /**
          * 注意：获取数据时候，把分区Subarea的Region的加载方式设置为即时加载
          */
-        responseJson(pb, new String[]{"currentPage", "pageSize", "detachedCriteria","subareas"});
+        //3.返回json数据
+        responseJson(pb,new String[]{"currentPage","pageSize","detachedCriteria","subareas"});
     }
+
     //导出表格【下载一个xls文件】
     public void exportExcel() throws IOException {
 
@@ -104,7 +111,7 @@ public class SubareaAction extends BaseAction<Subarea> {
 
         //4.查询数据
         List<Subarea> subareas = subareaService.findAll();
-        for(Subarea s : subareas){
+        for (Subarea s : subareas) {
             row = sheet.createRow(sheet.getLastRowNum() + 1);
             row.createCell(0).setCellValue(s.getId());
             row.createCell(1).setCellValue(s.getRegion().getId());
@@ -113,10 +120,10 @@ public class SubareaAction extends BaseAction<Subarea> {
         }
 
         //响应【输出流】
-        HttpServletResponse response =  ServletActionContext.getResponse();
+        HttpServletResponse response = ServletActionContext.getResponse();
         //设置响应头
-        String fileName = URLEncoder.encode("分区数据.xls","utf-8");
-        response.setHeader("Content-Disposition","attachment;filename=" + fileName);
+        String fileName = URLEncoder.encode("分区数据.xls", "utf-8");
+        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
 
 
         String contentType = ServletActionContext.getServletContext().getMimeType(fileName);
@@ -126,5 +133,11 @@ public class SubareaAction extends BaseAction<Subarea> {
 
         OutputStream os = response.getOutputStream();
         workbook.write(os);
+    }
+
+    public void listJson() throws IOException {
+        //未绑定的分区数据
+        List<Subarea> list = subareaService.findAllWithUnbound();
+        responseJson(list,new String[]{"decidedzone","region"});
     }
 }

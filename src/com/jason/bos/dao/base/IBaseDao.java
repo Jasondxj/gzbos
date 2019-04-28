@@ -3,6 +3,7 @@ package com.jason.bos.dao.base;
 import com.jason.bos.model.PageBean;
 import com.jason.bos.model.Region;
 import com.jason.bos.model.Staff;
+import org.hibernate.criterion.DetachedCriteria;
 
 import java.io.Serializable;
 import java.util.List;
@@ -47,4 +48,6 @@ public interface IBaseDao<T> {
      * @param pb
      */
     public void pageQuery(PageBean<T> pb);
+
+    public List<T> findByDetachedCriteria(DetachedCriteria dc);
 }

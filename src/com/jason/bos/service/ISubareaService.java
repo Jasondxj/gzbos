@@ -10,4 +10,6 @@ import java.util.List;
 public interface ISubareaService extends IBaseService<Subarea>{
 
     public void pageQuery(PageBean<Subarea> pb);
+
+    public List<Subarea> findAllWithUnbound();
 }

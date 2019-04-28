@@ -5,6 +5,15 @@ import java.util.Objects;
 public class Decidedzone {
     private String id;
     private String name;
+    private Staff staff;//员工
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
 
     public String getId() {
         return id;
@@ -23,17 +32,10 @@ public class Decidedzone {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Decidedzone that = (Decidedzone) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, name);
+    public String toString() {
+        return "Decidedzone{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -10,6 +10,18 @@ public class Subarea {
     private String single;
     private String position;
     private Region region;//多对一
+    private Decidedzone decidedzone;//定区
+    public String getSubareaId(){
+        return id;
+    }
+
+    public Decidedzone getDecidedzone() {
+        return decidedzone;
+    }
+
+    public void setDecidedzone(Decidedzone decidedzone) {
+        this.decidedzone = decidedzone;
+    }
 
     public Region getRegion() {
         return region;

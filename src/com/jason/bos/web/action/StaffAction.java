@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 public class StaffAction extends BaseAction<Staff> {
     @Autowired
@@ -81,8 +82,6 @@ public class StaffAction extends BaseAction<Staff> {
     /**
      * 分页查询
      */
-
-
     public void pageQuery() throws IOException {
         //1.接收参数 page[当前页] rows[每页显示多少条]
         //2.调用service,参数里传一个PageBean
@@ -91,6 +90,19 @@ public class StaffAction extends BaseAction<Staff> {
         pb.setPageSize(rows);
         staffService.pageQuery(pb);
         //3.返回json数据
-       responseJson(pb,new String[]{"currentPage","pageSize","detachedCriteria"});
+        responseJson(pb, new String[]{"currentPage", "pageSize", "detachedCriteria"});
+    }
+
+    public void listJson() throws IOException {
+        //在职员工
+        List<Staff> list = staffService.findAllByNoDelete();
+
+       /* private String telephone;//手机
+        private String haspda;//是否有台设备 0:无 1：有
+        private String deltag = "0";//删除标志 0:正常在职 1：离职
+        private String station;//所属单位
+        private String standard;//收费标准*/
+
+        responseJson(list, new String[]{"telephone", "haspda", "deltag", "station", "standard"});
     }
 }
