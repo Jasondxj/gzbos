@@ -1,7 +1,11 @@
 package com.jason.bos.dao.base;
 
+import com.jason.bos.model.PageBean;
+import com.jason.bos.model.Region;
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
@@ -65,8 +69,8 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
     public void executeUpdate(String hql, Object... objects) {
         Session currentSession = hibernateTemplate.getSessionFactory().getCurrentSession();
         Query query = currentSession.createQuery(hql);
-        for (int i = 0; i <objects.length ; i++) {
-            query.setParameter(i,objects[i]);
+        for (int i = 0; i < objects.length; i++) {
+            query.setParameter(i, objects[i]);
         }
         query.executeUpdate();
     }
@@ -75,10 +79,39 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
     public void executeUpdateByQueryName(String queryName, Object... objects) {
         Session currentSession = hibernateTemplate.getSessionFactory().getCurrentSession();
         //从映射文件拿到queryname，并返回query对象
-        Query query=currentSession.getNamedQuery(queryName);
-        for (int i = 0; i <objects.length ; i++) {
-            query.setParameter(i,objects[i]);
+        Query query = currentSession.getNamedQuery(queryName);
+        for (int i = 0; i < objects.length; i++) {
+            query.setParameter(i, objects[i]);
         }
         query.executeUpdate();
+    }
+
+    @Override
+    public void saveList(List<T> list) {
+        hibernateTemplate.saveOrUpdateAll(list);
+    }
+
+    @Override
+    public void pageQuery(PageBean<T> pb) {
+        //1.查询总记录数
+        //获取离线的查询对象
+        DetachedCriteria dc = pb.getDetachedCriteria();
+
+        //select count(*) From Staff;
+        //设置查询总记录数条件
+        dc.setProjection(Projections.rowCount());
+
+        List<Long> list = hibernateTemplate.findByCriteria(dc);
+        Long total = list.get(0);
+
+        pb.setTotal(total.intValue());
+
+        //2.查询分页数据
+        dc.setProjection(null);//把之前条件清空
+        //limit 0,10
+        int start = (pb.getCurrentPage() - 1) * pb.getPageSize();
+        int length = pb.getPageSize();
+        List<T> rows = hibernateTemplate.findByCriteria(dc, start, length);
+        pb.setRows(rows);
     }
 }

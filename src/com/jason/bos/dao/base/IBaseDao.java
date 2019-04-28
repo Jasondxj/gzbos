@@ -1,5 +1,9 @@
 package com.jason.bos.dao.base;
 
+import com.jason.bos.model.PageBean;
+import com.jason.bos.model.Region;
+import com.jason.bos.model.Staff;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -35,4 +39,12 @@ public interface IBaseDao<T> {
      * @param objects
      */
     public void executeUpdateByQueryName(String queryName,Object... objects);
+
+    public void saveList(List<T> list);
+
+    /**
+     * 声明公共分页方法
+     * @param pb
+     */
+    public void pageQuery(PageBean<T> pb);
 }

@@ -81,33 +81,16 @@ public class StaffAction extends BaseAction<Staff> {
     /**
      * 分页查询
      */
-    private int page;
-    private int row;
 
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
 
     public void pageQuery() throws IOException {
-        PageBean<Staff> pb = new PageBean<Staff>();
+        //1.接收参数 page[当前页] rows[每页显示多少条]
+        //2.调用service,参数里传一个PageBean
+        //封装条件
         pb.setCurrentPage(page);
-        pb.setPageSize(row);
-        //查询条件
-        DetachedCriteria dc = DetachedCriteria.forClass(Staff.class);
-        pb.setDetachedCriteria(dc);
+        pb.setPageSize(rows);
         staffService.pageQuery(pb);
-        //返回json数据
-        //3.1排除不需要转json的属性
-        JsonConfig config = new JsonConfig();
-        config.setExcludes(new String[]{"currentPage", "pageSize", "detachedCriteria"});
-        //3.2创建json对象
-        JSONObject jsonObject = JSONObject.fromObject(pb, config);
-        HttpServletResponse response = ServletActionContext.getResponse();
-        response.setContentType("text/json;charset=utf-8");
-        response.getWriter().write(jsonObject.toString());
+        //3.返回json数据
+       responseJson(pb,new String[]{"currentPage","pageSize","detachedCriteria"});
     }
 }

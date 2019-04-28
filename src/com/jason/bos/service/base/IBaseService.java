@@ -1,5 +1,8 @@
 package com.jason.bos.service.base;
 
+import com.jason.bos.model.PageBean;
+import com.jason.bos.model.Region;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,4 +21,6 @@ public interface IBaseService<T> {
 
     //查询表的所有数据
     public List<T> findAll();
+
+
 }

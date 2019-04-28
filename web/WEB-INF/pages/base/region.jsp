@@ -25,6 +25,8 @@
 	src="${pageContext.request.contextPath }/js/easyui/ext/jquery.cookie.js"></script>
 <script
 	src="${pageContext.request.contextPath }/js/easyui/locale/easyui-lang-zh_CN.js"
+	type="text/javascript"></script><script
+	src="${pageContext.request.contextPath }/js/jquery.ocupload-1.1.2.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
 	function doAdd(){
@@ -39,6 +41,7 @@
 		alert("删除...");
 	}
 	
+
 	//工具栏
 	var toolbar = [ {
 		id : 'button-edit',	
@@ -107,10 +110,10 @@
 			border : false,
 			rownumbers : true,
 			striped : true,
-			pageList: [30,50,100],
+			pageList: [5,10,15],
 			pagination : true,
 			toolbar : toolbar,
-			url : "json/region.json",
+			url : "${pageContext.request.contextPath}/regionAction_pageQuery.action",
 			idField : 'id',
 			columns : columns,
 			onDblClickRow : doDblClickRow
@@ -126,7 +129,19 @@
 	        height: 400,
 	        resizable:false
 	    });
-		
+
+
+		//绑定一键上传
+		$('#button-import').upload({
+			action:'${pageContext.request.contextPath}/regionAction_importExcel.action',
+			name:'excelFile',
+            onComplete:function (data) {
+				//alert(data);
+				$("#grid").datagrid('reload');
+            }
+		});
+
+
 	});
 
 	function doDblClickRow(){
