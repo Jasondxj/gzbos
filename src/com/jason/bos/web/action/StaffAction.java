@@ -27,9 +27,32 @@ public class StaffAction extends BaseAction<Staff> {
         return SUCCESS;
     }
 
+
+    //    public String update() {
+//        //getModel() 【游离/脱管状态 session没有缓存，有id】
+////        System.out.println("表单提交:" + getModel());
+//        staffService.update(getModel());
+//        return SUCCESS;
+//    }
     @Override
     public String update() {
-        return null;
+
+        //getModel() 【游离/脱管状态 session没有缓存，有id】
+//        System.out.println("表单提交:" + getModel());
+
+        //1.根据id从数据库获取数据【持久状态-session有缓存，有id】
+        Staff staff = staffService.find(getModel().getId());
+
+
+        //2.更新数据库的数据
+        staff.setName(getModel().getName());
+        staff.setTelephone(getModel().getTelephone());
+        staff.setStation(getModel().getStation());
+        staff.setHaspda(getModel().getHaspda());
+        staff.setStandard(getModel().getStandard());
+//        System.out.println("数据库：" + staff);
+        staffService.update(staff);
+        return SUCCESS;
     }
 
     /**
