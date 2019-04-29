@@ -3,6 +3,8 @@ package com.jason.bos.web.action.base;
 import com.jason.bos.model.PageBean;
 import com.jason.bos.model.Region;
 import com.jason.bos.model.Staff;
+import com.jason.bos.service.*;
+import com.jason.crm.service.CustomerService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import net.sf.json.JSONArray;
@@ -10,6 +12,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -37,6 +40,20 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
      * 分页模型
      */
     protected PageBean<T> pb = new PageBean<T>();
+
+    //    =======================================抽取service===================
+    @Autowired
+    protected IUserService userService;
+    @Autowired
+    protected ISubareaService subareaService;
+    @Autowired
+    protected IStaffService staffService;
+    @Autowired
+    protected IRegionService regionService;
+    @Autowired
+    protected IDecidedzoneService decidedzoneService;
+    @Autowired
+    protected CustomerService customerService;
 
     //空参构造方法实现t的实例化
     public BaseAction() {

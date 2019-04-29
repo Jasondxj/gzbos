@@ -13,8 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class UserAction extends BaseAction<User> {
-    @Autowired
-    private IUserService userService;
 
     public String login() {
         String username = getModel().getUsername();

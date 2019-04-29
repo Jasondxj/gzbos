@@ -20,15 +20,15 @@ public class DecidedzoneAction extends BaseAction<Decidedzone> {
         this.subareaId = subareaId;
     }
 
-    @Autowired
-    private IDecidedzoneService decidedzoneService;
+
+
     @Override
     public String save() {
         System.out.println("参数:" + getModel());
         System.out.println("参数:" + getModel().getStaff());
-        System.out.println("参数:" + StringUtils.join(subareaId,"，"));
+        System.out.println("参数:" + StringUtils.join(subareaId, "，"));
         //调用service
-        decidedzoneService.save(getModel(),subareaId);
+        decidedzoneService.save(getModel(), subareaId);
         return SUCCESS;
     }
 
@@ -55,17 +55,42 @@ public class DecidedzoneAction extends BaseAction<Decidedzone> {
         decidedzoneService.pageQuery(pb);
 
         //3.返回json数据
-        responseJson(pb,new String[]{"currentPage","pageSize","detachedCriteria"});
+        responseJson(pb, new String[]{"currentPage", "pageSize", "detachedCriteria"});
 
     }
+
+
 
     /**
      * 获取未关联定区的客户信息
      */
-    @Autowired
-    private CustomerService customerService;
     public void findnoassociationCustomers() throws IOException {
         List<Customer> customers = customerService.findnoassociationCustomers();
-      responseJson(customers,new String[]{});
+        responseJson(customers, new String[]{});
+    }
+    /**
+     * 获取关联定区的客户信息
+     */
+    public void findhasassociationCustomers() throws IOException {
+        List<Customer> customers = customerService.findhasassociationCustomers(getModel().getId());
+        responseJson(customers, new String[]{});
+    }
+
+    /**
+     * 关联客户到定区
+     *
+     * @return
+     */
+    private Integer[] customerIds;
+
+    public void setCustomerIds(Integer[] customerIds) {
+        this.customerIds = customerIds;
+    }
+
+    public String assigncustomerstodecidedzone() {
+        //客户id数组和定区id
+        //远程调用
+        customerService.assignCustomersToDecidedZone(customerIds, getModel().getId());
+        return SUCCESS;
     }
 }

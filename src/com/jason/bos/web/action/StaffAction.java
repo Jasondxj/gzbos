@@ -19,8 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class StaffAction extends BaseAction<Staff> {
-    @Autowired
-    private IStaffService staffService;
+
 
     @Override
     public String save() {

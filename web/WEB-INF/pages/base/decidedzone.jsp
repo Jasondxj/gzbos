@@ -44,7 +44,42 @@
 	}
 	
 	function doAssociations(){
-		$('#customerWindow').window('open');
+	    //判断是否选中定区
+        var selectedRows = $("#grid").datagrid('getSelections');
+        if(selectedRows.length == 1){
+            $('#customerWindow').window('open');
+            //给隐藏的定区id赋值
+            var decidedId=selectedRows[0].id;//选中的定区的id
+            $("#customerDecidedZoneId").val(decidedId);
+            //显示未关联的客户
+            var url='${pageContext.request.contextPath}/decidedzoneAction_findnoassociationCustomers.action';
+            $.post(url,function (data) {
+                $("#noassociationSelect").empty();//清空
+                for(var i=0;i<data.length;i++){
+                    //取一行shuju
+                    var rowdata=data[i];
+                    //给selected标签添加option标签
+                    var option='<option value="'+rowdata.id+'">'+rowdata.name+'</option>';
+                    $("#noassociationSelect").append(option);
+                }
+            });
+            //显示选中定区已关联的客户
+            url='${pageContext.request.contextPath}/decidedzoneAction_findhasassociationCustomers.action';
+            $.post(url,{id:decidedId},function (data) {
+                $("#associationSelect").empty();//清空
+                for(var i=0;i<data.length;i++){
+                    //取一行shuju
+                    var rowdata=data[i];
+                    //给selected标签添加option标签
+                    var option='<option value="'+rowdata.id+'">'+rowdata.name+'</option>';
+                    $("#associationSelect").append(option);
+                }
+            });
+        }else{
+            $.messager.alert('提示','未选中一个定区','error');
+            return;
+        }
+
 	}
 	
 	//工具栏
@@ -158,6 +193,17 @@
 		$("#save").click(function () {
             $("#addDeciedzoneForm").submit();
             $('#grid').datagrid('reload');
+        });
+		$("#toRight").click(function () {
+            $("#associationSelect").append($("#noassociationSelect option:selected"));
+        });
+        $("#toLeft").click(function () {
+            $("#noassociationSelect").append($("#associationSelect option:selected"));
+        });
+        $("#associationBtn").click(function () {
+            //把右边的selected都设置为选中状态
+            $("#associationSelect option").attr('selected','selected');
+            $("#customerForm").submit();
         });
 		
 	});
@@ -345,7 +391,7 @@
 	<!-- 关联客户窗口 -->
 	<div class="easyui-window" title="关联客户窗口" id="customerWindow" collapsible="false" closed="true" minimizable="false" maximizable="false" style="top:20px;left:200px;width: 400px;height: 300px;">
 		<div style="overflow:auto;padding:5px;" border="false">
-			<form id="customerForm" action="${pageContext.request.contextPath }/decidedzone_assigncustomerstodecidedzone.action" method="post">
+			<form id="customerForm" action="${pageContext.request.contextPath }/decidedzoneAction_assigncustomerstodecidedzone.action" method="post">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="3">关联客户</td>
