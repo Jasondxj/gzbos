@@ -56,6 +56,8 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
     protected CustomerService customerService;
     @Autowired
     protected INoticebillService noticebillService;
+    @Autowired
+    protected IWorkordermanageService workordermanageService;
 
     //空参构造方法实现t的实例化
     public BaseAction() {

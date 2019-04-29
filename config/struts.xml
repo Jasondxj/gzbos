@@ -57,5 +57,7 @@
         <!--业务受理模块-->
         <action name="noticebillAction_*" class="com.jason.bos.web.action.NoticebillAction" method="{1}">
         </action>
+        <action name="workordermanageAction_*" class="com.jason.bos.web.action.WorkordermanageAction" method="{1}">
+        </action>
     </package>
 </struts>
