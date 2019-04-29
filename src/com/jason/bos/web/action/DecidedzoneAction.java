@@ -3,10 +3,13 @@ package com.jason.bos.web.action;
 import com.jason.bos.model.Decidedzone;
 import com.jason.bos.service.IDecidedzoneService;
 import com.jason.bos.web.action.base.BaseAction;
+import com.jason.crm.domain.Customer;
+import com.jason.crm.service.CustomerService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.util.List;
 
 public class DecidedzoneAction extends BaseAction<Decidedzone> {
 
@@ -54,5 +57,15 @@ public class DecidedzoneAction extends BaseAction<Decidedzone> {
         //3.返回json数据
         responseJson(pb,new String[]{"currentPage","pageSize","detachedCriteria"});
 
+    }
+
+    /**
+     * 获取未关联定区的客户信息
+     */
+    @Autowired
+    private CustomerService customerService;
+    public void findnoassociationCustomers() throws IOException {
+        List<Customer> customers = customerService.findnoassociationCustomers();
+      responseJson(customers,new String[]{});
     }
 }

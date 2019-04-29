@@ -49,5 +49,6 @@
     <orderEntry type="library" name="json-lib-2.4-jdk15" level="project" />
     <orderEntry type="library" name="poi-3.9-20121203" level="project" />
     <orderEntry type="library" name="pinyin4j-2.5.0" level="project" />
+    <orderEntry type="library" name="hessian-4.0.33" level="project" />
   </component>
 </module>
