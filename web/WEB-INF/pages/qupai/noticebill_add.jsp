@@ -37,6 +37,26 @@
 				$('#noticebillForm').submit();
 			}
 		});
+		//监听来电号码
+        $("input[name=telephone]").blur(function () {
+            //1.获取来电号码
+            var tel=$("input[name=telephone]").val();
+            //2.发送请求，根据号码查找客户信息
+            var url = "${pageContext.request.contextPath}/noticebillAction_findCustomerByTel";
+            $.post(url,{tel:tel},function (data) {
+                //3.自动填充表格数据
+                //{"address":"天津","decidedzone_id":"","id":3,"name":"王五","station":"搜狗","telephone":"3"}
+                //3.1 客户ID customerId
+                $("input[name=customerId]").val(data.id);
+                //3.2 客户名字 customerName
+                $("input[name=customerName]").val(data.name);
+                //3.3取件地址 pickaddress
+                $("input[name=pickaddress]").val(data.address);
+
+                //3.4定区id
+                $("input[name=decidedzoneId]").val(data.decidedzone_id);
+            });
+        });
 	});
 </script>
 </head>
@@ -51,7 +71,8 @@
 		</div>
 	</div>
 	<div region="center" style="overflow:auto;padding:5px;" border="false">
-		<form id="noticebillForm" action="" method="post">
+		<form id="noticebillForm" action="${pageContext.request.contextPath}/noticebillAction_save.action" method="post">
+            <input type="hidden" name="decidedzoneId">
 			<table class="table-edit" width="95%" align="center">
 				<tr class="title">
 					<td colspan="4">客户信息</td>

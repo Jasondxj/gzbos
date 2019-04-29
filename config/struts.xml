@@ -54,5 +54,8 @@
         <action name="decidedzoneAction_*" class="com.jason.bos.web.action.DecidedzoneAction" method="{1}">
             <result name="success">/WEB-INF/pages/base/decidedzone.jsp</result>
         </action>
+        <!--业务受理模块-->
+        <action name="noticebillAction_*" class="com.jason.bos.web.action.NoticebillAction" method="{1}">
+        </action>
     </package>
 </struts>
