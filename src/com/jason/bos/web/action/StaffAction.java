@@ -8,6 +8,7 @@ import com.jason.bos.service.IUserService;
 import com.jason.bos.web.action.base.BaseAction;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.List;
 public class StaffAction extends BaseAction<Staff> {
 
 
+    @RequiresPermissions("staff")//该方法需要一个staff权限
     @Override
     public String save() {
         staffService.save(getModel());

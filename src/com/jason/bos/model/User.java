@@ -1,11 +1,12 @@
 package com.jason.bos.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class User {
+public class User implements Serializable{
     private String id;
     private String username;
     private String password;

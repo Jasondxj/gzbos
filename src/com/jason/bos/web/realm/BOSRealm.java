@@ -4,6 +4,7 @@ import com.jason.bos.dao.IUserDao;
 import com.jason.bos.model.User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -17,7 +18,10 @@ public class BOSRealm extends AuthorizingRealm{
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        //根据用户ID查权限
+        SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
+        info.addStringPermission("staff");
+        return info;
     }
 
     /**
