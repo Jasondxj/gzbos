@@ -94,17 +94,21 @@
             text: '增加',
             iconCls: 'icon-add',
             handler: doAdd
-        }, {
-            id: 'button-delete',
-            text: '作废',
-            iconCls: 'icon-cancel',
-            handler: doDelete
-        }, {
-            id: 'button-save',
-            text: '还原',
-            iconCls: 'icon-save',
-            handler: doRestore
-        }];
+        },
+            <shiro:hasPermission name="staff.delete">
+            {
+                id: 'button-delete',
+                text: '作废',
+                iconCls: 'icon-cancel',
+                handler: doDelete
+            },
+            </shiro:hasPermission>
+            {
+                id: 'button-save',
+                text: '还原',
+                iconCls: 'icon-save',
+                handler: doRestore
+            }];
         // 定义列
         var columns = [[{
             field: 'id',

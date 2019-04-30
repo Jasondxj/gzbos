@@ -92,10 +92,15 @@
             </value>
         </property>
     </bean>
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
+    </bean>
     <!--2.配置shiro的安全管理者-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!--配置一realm对象-->
         <property name="realm" ref="realm"></property>
+        <!--配置缓存管理者-->
+        <property name="cacheManager" ref="cacheManager"></property>
     </bean>
     <!--3.配置一个realm对象,这个对象要实现写一个实现类,继承抽象类AuthorizingRealm-->
     <bean id="realm" class="com.jason.bos.web.realm.BOSRealm"></bean>

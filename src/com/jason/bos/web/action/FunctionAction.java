@@ -2,6 +2,8 @@ package com.jason.bos.web.action;
 
 import com.jason.bos.model.Function;
 import com.jason.bos.model.Staff;
+import com.jason.bos.model.User;
+import com.jason.bos.utils.BOSContextUtils;
 import com.jason.bos.web.action.base.BaseAction;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -54,5 +56,16 @@ public class FunctionAction extends BaseAction<Function> {
         List<Function> functions = functionService.findAll();
         responseJson(functions,new String[]{"function","funtions","roles"});
 
+    }
+    public void findMenu() throws IOException {
+        List<Function> menus = null;
+        User loginUser = BOSContextUtils.loginUser();
+        if(loginUser.getUsername().equals("admin")){
+            menus = functionService.findAllMenu();
+        }else{
+            menus = functionService.findMenuByUserId(loginUser.getId());
+        }
+
+        responseJson(menus,new String[]{"function","funtions","roles"});
     }
 }

@@ -18,6 +18,15 @@ import java.util.List;
 @Service
 @Transactional//事务是由事务管理器来实现
 public class FunctionServiceImpl extends BaseServiceImpl<Function> implements IFunctionService {
+    @Override
+    public List<Function> findMenuByUserId(String id) {
+        return functionDao.findMenuByUserId(id);
+    }
+
+    @Override
+    public List<Function> findAllMenu() {
+        return functionDao.findAllMenu();
+    }
 
     @Override
     public void save(Function entity) {

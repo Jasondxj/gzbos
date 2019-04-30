@@ -1,6 +1,8 @@
 package com.jason.bos.web.realm;
 
+import com.jason.bos.dao.IFunctionDao;
 import com.jason.bos.dao.IUserDao;
+import com.jason.bos.model.Function;
 import com.jason.bos.model.User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -10,18 +12,38 @@ import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public class BOSRealm extends AuthorizingRealm{
     /**
      * 权限：与角色相关
      * @param principalCollection
      * @return
      */
+    @Autowired
+    private IFunctionDao functionDao;
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
+        //拿到用户
+        User loginUser = (User) principal.getPrimaryPrincipal();
+
         //根据用户ID查权限
-        SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
-        info.addStringPermission("staff");
-        info.addStringPermission("delete");
+        List<Function> functions =  null;
+
+        //admin超级管理员
+        if(loginUser.getUsername().equals("admin")){
+            functions = functionDao.findAll();
+        }else{
+            functions = functionDao.findListByUserId(loginUser.getId());
+        }
+
+        //往shiro添加权限
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        for (Function function : functions){
+            info.addStringPermission(function.getCode());
+        }
+
+        //info.addRole("staff");
         return info;
     }
 
