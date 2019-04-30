@@ -47,6 +47,7 @@
 
 
 
+    <!--配置使hibernate的session保留到页面渲染完之后，action中始终有session-->
     <filter>
         <filter-name>openSession</filter-name>
         <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>

@@ -1,5 +1,6 @@
 package com.jason.bos.web.action.base;
 
+import com.jason.bos.dao.IRoleDao;
 import com.jason.bos.model.PageBean;
 import com.jason.bos.model.Region;
 import com.jason.bos.model.Staff;
@@ -58,11 +59,24 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
     protected INoticebillService noticebillService;
     @Autowired
     protected IWorkordermanageService workordermanageService;
+    @Autowired
+    protected IFunctionService functionService;
+    @Autowired
+    protected IRoleService roleService;
 
     //空参构造方法实现t的实例化
     public BaseAction() {
-        //1.获取t的真实类型
-        ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
+        ParameterizedType pt= (ParameterizedType) this.getClass().getGenericSuperclass();;
+
+
+        //使用注解配置权限需要开启
+//        if (this.getClass().getGenericSuperclass() instanceof ParameterizedType){
+//            //1.获取t的真实类型
+//             pt = (ParameterizedType) this.getClass().getGenericSuperclass();
+//        }else{
+//            pt = (ParameterizedType) this.getClass().getSuperclass().getGenericSuperclass();
+//        }
+
 
         //获取泛型真实类型
         Type[] types = pt.getActualTypeArguments();

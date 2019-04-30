@@ -1,6 +1,8 @@
 package com.jason.bos.service.impl;
 
 import com.jason.bos.dao.IUserDao;
+import com.jason.bos.model.PageBean;
+import com.jason.bos.model.Role;
 import com.jason.bos.model.User;
 import com.jason.bos.service.IUserService;
 import com.jason.bos.service.base.BaseServiceImpl;
@@ -35,6 +37,22 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
         userDao.executeUpdate(hql, MD5Utils.text2md5(newPwd), id);*/
 
         userDao.executeUpdateByQueryName("updatePwd",MD5Utils.text2md5(newPwd),id);
+    }
+
+    @Override
+    public void save(User model, String[] roleIds) {
+        userDao.save(model);
+
+        for (String roleId : roleIds){
+            Role role = new Role();
+            role.setId(roleId);
+            model.getRoles().add(role);
+        }
+    }
+
+    @Override
+    public void pageQuery(PageBean<User> pb) {
+        userDao.pageQuery(pb);
     }
 
     @Override

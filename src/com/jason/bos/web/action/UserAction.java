@@ -4,6 +4,7 @@ import com.jason.bos.model.User;
 import com.jason.bos.service.IUserService;
 import com.jason.bos.utils.MD5Utils;
 import com.jason.bos.web.action.base.BaseAction;
+import com.mchange.v1.util.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -59,9 +60,27 @@ public class UserAction extends BaseAction<User> {
         }
         return "loginfailure";
     }
+    private String[] roleIds;
 
+    public void setRoleIds(String[] roleIds) {
+        this.roleIds = roleIds;
+    }
     @Override
     public String save() {
+        System.out.println(getModel());
+        System.out.println(ArrayUtils.toString(roleIds));
+
+        //修改密码
+        String pwd = MD5Utils.text2md5(getModel().getPassword());
+        getModel().setPassword(pwd);
+
+        if(roleIds != null && roleIds.length != 0){
+            userService.save(getModel(),roleIds);
+        }else{
+            logger.info("roleIds不能为空....");
+        }
+
+
         return null;
     }
 
@@ -97,5 +116,12 @@ public class UserAction extends BaseAction<User> {
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().print("{\"success\":\"1\"}");
         return NONE;
+    }
+    public void pageQuery() throws IOException {
+        pb.setCurrentPage(page);
+        pb.setPageSize(rows);
+        userService.pageQuery(pb);
+        responseJson(pb,new String[]{"currentPage","pageSize","detachedCriteria","roles"});
+
     }
 }

@@ -34,7 +34,7 @@
                 <column name="function_id" length="32" not-null="true" />
             </key>
             <many-to-many entity-name="com.jason.bos.model.Role">
-                <column name="role_id" length="32" not-null="true" />
+                <column name="role_id" length="32" not-null="true"/>
             </many-to-many>
         </set>
         <set name="functions" inverse="true">

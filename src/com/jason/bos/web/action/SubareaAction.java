@@ -87,7 +87,7 @@ public class SubareaAction extends BaseAction<Subarea> {
          * 注意：获取数据时候，把分区Subarea的Region的加载方式设置为即时加载
          */
         //3.返回json数据
-        responseJson(pb,new String[]{"currentPage","pageSize","detachedCriteria","subareas"});
+        responseJson(pb,new String[]{"currentPage","pageSize","detachedCriteria","subareas","decidedzone"});
     }
 
     //导出表格【下载一个xls文件】

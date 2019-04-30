@@ -1,5 +1,6 @@
 package com.jason.bos.service;
 
+import com.jason.bos.model.PageBean;
 import com.jason.bos.model.User;
 import com.jason.bos.service.base.IBaseService;
 
@@ -15,4 +16,6 @@ public interface IUserService extends IBaseService<User>{
      * @param id
      */
     public void modifyPwd(String newPwd,String id);
+    public void save(User model, String[] roleIds);
+    public void pageQuery(PageBean<User> pb);
 }

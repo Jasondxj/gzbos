@@ -99,4 +99,15 @@
     </bean>
     <!--3.配置一个realm对象,这个对象要实现写一个实现类,继承抽象类AuthorizingRealm-->
     <bean id="realm" class="com.jason.bos.web.realm.BOSRealm"></bean>
+    <!--========================================================================-->
+    <!--4.如果要使用注解来配置权限，需要声明一个代理和切面
+        自动代理，会自动扫描权限注解
+    -->
+    <!--<bean id="DefaultAdvisorAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">-->
+        <!--使用cglib实现代理-->
+        <!--<property name="proxyTargetClass" value="true"></property>-->
+    <!--</bean>-->
+    <!--<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"></bean>-->
+    <!--配置action-->
+    <!--<bean class="com.jason.bos.web.action.StaffAction" scope="prototype"></bean>-->
 </beans>

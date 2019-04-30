@@ -8,7 +8,9 @@ import com.jason.bos.service.IUserService;
 import com.jason.bos.web.action.base.BaseAction;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ import java.util.List;
 public class StaffAction extends BaseAction<Staff> {
 
 
-    @RequiresPermissions("staff")//该方法需要一个staff权限
+//    @RequiresPermissions("staff")//该方法需要一个staff权限
     @Override
     public String save() {
         staffService.save(getModel());
@@ -68,6 +70,9 @@ public class StaffAction extends BaseAction<Staff> {
 
     @Override
     public String delete() throws IOException {
+        //使用代码进行权限控制
+        Subject subject= SecurityUtils.getSubject();
+        subject.checkPermission("delete");
         //获取删除的id
         staffService.deleteBatch(ids);
         HttpServletResponse response = ServletActionContext.getResponse();

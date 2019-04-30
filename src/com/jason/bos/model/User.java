@@ -1,9 +1,9 @@
 package com.jason.bos.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class User implements Serializable{
@@ -16,7 +16,20 @@ public class User implements Serializable{
     private String station;
     private String telephone;
     private String remark;
-    private Set<Role> roles=new HashSet<Role>();
+
+    public String getBirthdayStr(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return  sdf.format(birthday);
+    }
+
+    public String getRolesStr(){
+        String str = "";
+        for (Role role : roles){
+            str += role.getName() + "、";
+        }
+        return str;
+    }
+    private Set<Role> roles = new HashSet<Role>();
 
     public Set<Role> getRoles() {
         return roles;
@@ -97,6 +110,7 @@ public class User implements Serializable{
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
 
     @Override
     public String toString() {

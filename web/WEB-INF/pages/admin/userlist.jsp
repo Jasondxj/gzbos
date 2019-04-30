@@ -65,7 +65,7 @@
 		rowspan : 2,
 		align : 'center'
 	}, {
-		field : 'birthday',
+		field : 'birthdayStr',
 		title : '生日',
 		width : 120,
 		rowspan : 2,
@@ -74,8 +74,8 @@
 		title : '其他信息',
 		colspan : 2
 	}, {
-		field : 'telephone',
-		title : '电话',
+		field : 'rolesStr',
+		title : '角色',
 		width : 800,
 		rowspan : 2
 	} ], [ {
@@ -99,7 +99,10 @@
 			rownumbers : true,
 			striped : true,
 			toolbar : toolbar,
-			url : "json/users.json",
+			url : "${pageContext.request.contextPath}/userAction_pageQuery.action",
+            pageList:[1,2,3],
+            pageSize:2,
+            pagination:true,
 			idField : 'id', 
 			frozenColumns : frozenColumns,
 			columns : columns,

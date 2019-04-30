@@ -21,6 +21,7 @@ public class BOSRealm extends AuthorizingRealm{
         //根据用户ID查权限
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         info.addStringPermission("staff");
+        info.addStringPermission("delete");
         return info;
     }
 

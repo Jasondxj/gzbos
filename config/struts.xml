@@ -11,7 +11,12 @@
         <!--配置全局result-->
         <global-results>
             <result name="login" type="redirect">/login.jsp</result>
+            <result name="unauthorizedUrl" type="redirect">/authorizing.jsp</result>
         </global-results>
+        <!--抛出具体异常来到指定页面-->
+        <global-exception-mappings>
+            <exception-mapping exception="org.apache.shiro.authz.UnauthorizedException" result="unauthorizedUrl"></exception-mapping>
+        </global-exception-mappings>
         <!-- 配置jsp页面的访问规则-->
         <action name="page_*_*">
             <result name="success">/WEB-INF/pages/{1}/{2}.jsp</result>
@@ -41,7 +46,12 @@
         <!--业务受理模块-->
         <action name="noticebillAction_*" class="com.jason.bos.web.action.NoticebillAction" method="{1}">
         </action>
+
         <action name="workordermanageAction_*" class="com.jason.bos.web.action.WorkordermanageAction" method="{1}">
+        </action>
+        <action name="functionAction_*" class="com.jason.bos.web.action.FunctionAction" method="{1}">
+        </action>
+        <action name="roleAction_*" class="com.jason.bos.web.action.RoleAction" method="{1}">
         </action>
     </package>
 </struts>
