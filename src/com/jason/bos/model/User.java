@@ -18,6 +18,9 @@ public class User implements Serializable{
     private String remark;
 
     public String getBirthdayStr(){
+        if (birthday==null){
+            return "";
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return  sdf.format(birthday);
     }

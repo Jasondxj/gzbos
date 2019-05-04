@@ -35,7 +35,7 @@
 		<tr>
 			<td width="200">浏览流程定义zip压缩文件</td>
 			<td>
-				<input type="file" name="deploy" />
+				<input type="file" name="zipFile" />
 			</td>
 		</tr>
 		<tr>

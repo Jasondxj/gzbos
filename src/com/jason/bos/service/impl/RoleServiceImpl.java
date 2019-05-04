@@ -5,6 +5,9 @@ import com.jason.bos.model.PageBean;
 import com.jason.bos.model.Role;
 import com.jason.bos.service.IRoleService;
 import com.jason.bos.service.base.BaseServiceImpl;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.Group;
+import org.activiti.engine.impl.persistence.entity.GroupEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,14 +18,24 @@ import java.util.List;
 @Service
 @Transactional//事务是由事务管理器来实现
 public class RoleServiceImpl extends BaseServiceImpl<Role> implements IRoleService {
-
+    @Autowired
+    private IdentityService identityService;
+    /**
+     * 保存角色
+     * @param role 角色模型
+     * @param funtionIds 权限、功能id
+     */
     @Override
     public void save(Role role, String funtionIds) {
 
         //role:瞬时状态[no session,no id]
         //1.保存角色
         roleDao.save(role);//持久状态[session id]
-
+        //1.2保存角色到用户组中
+        Group group=new GroupEntity();
+        group.setId(role.getName());
+        group.setName(role.getName());
+        identityService.saveGroup(group);
         //2.添加角色-权限 中间表数据
         //funtionIds:11,112,113,114,115,116
         //2.1 拆分id

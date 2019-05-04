@@ -19,5 +19,7 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
     protected IFunctionDao functionDao;
     @Autowired
     protected IRoleDao roleDao;
+    @Autowired
+    protected IUserDao userDao;
 
 }
