@@ -5,6 +5,7 @@ import com.jason.bos.service.IUserService;
 import com.jason.bos.utils.MD5Utils;
 import com.jason.bos.web.action.base.BaseAction;
 import com.mchange.v1.util.ArrayUtils;
+import org.activiti.engine.RepositoryService;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -23,6 +24,9 @@ public class UserAction extends BaseAction<User> {
 
     //创建一个日志对象
     Logger logger = Logger.getLogger(UserAction.class);
+
+    @Autowired
+    private RepositoryService rs;
 
     public String login() {
         logger.info(getModel());
