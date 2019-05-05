@@ -47,7 +47,9 @@
         <action name="noticebillAction_*" class="com.jason.bos.web.action.NoticebillAction" method="{1}">
         </action>
 
+        <!--工作单模块-->
         <action name="workordermanageAction_*" class="com.jason.bos.web.action.WorkordermanageAction" method="{1}">
+            <result name="list">WEB-INF/pages/workflow/startransfer.jsp</result>
         </action>
         <action name="functionAction_*" class="com.jason.bos.web.action.FunctionAction" method="{1}">
         </action>

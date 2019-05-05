@@ -23,6 +23,15 @@ public class Workordermanage {
     private String vol;
     private String managerCheck;
     private Date updatetime;
+    private String start="0";//未启动配送流程
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
 
     public String getId() {
         return id;
@@ -177,34 +186,9 @@ public class Workordermanage {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Workordermanage that = (Workordermanage) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(arrivecity, that.arrivecity) &&
-                Objects.equals(product, that.product) &&
-                Objects.equals(num, that.num) &&
-                Objects.equals(weight, that.weight) &&
-                Objects.equals(floadreqr, that.floadreqr) &&
-                Objects.equals(prodtimelimit, that.prodtimelimit) &&
-                Objects.equals(prodtype, that.prodtype) &&
-                Objects.equals(sendername, that.sendername) &&
-                Objects.equals(senderphone, that.senderphone) &&
-                Objects.equals(senderaddr, that.senderaddr) &&
-                Objects.equals(receivername, that.receivername) &&
-                Objects.equals(receiverphone, that.receiverphone) &&
-                Objects.equals(receiveraddr, that.receiveraddr) &&
-                Objects.equals(feeitemnum, that.feeitemnum) &&
-                Objects.equals(actlweit, that.actlweit) &&
-                Objects.equals(vol, that.vol) &&
-                Objects.equals(managerCheck, that.managerCheck) &&
-                Objects.equals(updatetime, that.updatetime);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, arrivecity, product, num, weight, floadreqr, prodtimelimit, prodtype, sendername, senderphone, senderaddr, receivername, receiverphone, receiveraddr, feeitemnum, actlweit, vol, managerCheck, updatetime);
+    public String toString() {
+        return "工作单信息 [编号=" + id + ", 货物名称=" + product
+                + ", 货物重量=" + weight + ", 收货人="
+                + receivername + ", 收货人电话=" + receiverphone + "]";
     }
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 public class WorkordermanageAction extends BaseAction<Workordermanage> {
     @Override
@@ -32,8 +33,21 @@ public class WorkordermanageAction extends BaseAction<Workordermanage> {
         return null;
     }
 
+    List<Workordermanage> list;
+
+    public List<Workordermanage> getList() {
+        return list;
+    }
+
     @Override
     public String list() {
-        return null;
+        //查询未启动配送流程的工作单
+        list=workordermanageService.findAllWithNoStart();
+        return "list";
+    }
+    public String start(){
+        //启动工作流程
+        workordermanageService.start(getModel().getId());
+        return list();
     }
 }
